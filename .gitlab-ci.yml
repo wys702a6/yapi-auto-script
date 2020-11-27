@@ -1,0 +1,14 @@
+stages:
+  - deploy
+
+deploy-release:
+  stage: deploy
+  script:
+  - docker build -t registry.wosai-inc.com/${CI_PROJECT_NAME}:${CI_BUILD_REF_SLUG}-${CI_BUILD_REF} .
+  - docker push registry.wosai-inc.com/${CI_PROJECT_NAME}:${CI_BUILD_REF_SLUG}-${CI_BUILD_REF}
+  tags:
+  - shell
+  only:
+  - /^release.*$/
+  - master
+  - tags
